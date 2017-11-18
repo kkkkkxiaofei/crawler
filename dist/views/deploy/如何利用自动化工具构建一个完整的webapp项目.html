@@ -1,0 +1,26 @@
+<h4 id="yeoman">Yeoman</h4>
+<p>当你需要构建一个webapp项目时，为了更好的管理项目，Yeoman是一个不错的选择。有一下工具你可能需要提前安装：</p>
+<ul>
+<li><code>yo</code> - <code>Yeoman</code>用来自动初始化项目的工具.----create a new web app</li>
+<li>你还需要一个包管理器，例如<code>bower</code>和<code>npm</code>.----handle dependencies </li>
+<li>当然，我们还需要build项目，如<code>Grunt</code>和<code>Gulp</code>.----preview,test and buid</li>
+</ul>
+<h4 id="yo">安装yo</h4>
+<pre><code>$ npm install -g yo bower grunt-cli gulp
+</code></pre>
+<pre><code>$ npm install -g yo bower grunt-cli gulp
+</code></pre>
+<p>为了生成web app，我们还需要一个web generator</p>
+<pre><code>$ npm install -g generator-webapp
+</code></pre>
+<p>这个generator将会包括<code>HTML5</code> , <code>jQuery</code>, <code>Modernizr</code>, and <code>Bootstrap</code>等重要依赖，同时它将使用<code>Grunt</code>来build项目. </p>
+<h4 id="">接下来就会让我们新初始化一个项目吧</h4>
+<pre><code>$ mkdir my-yo-project
+$ cd my-yo-project
+$ yo webapp
+</code></pre>
+<p>这样你一个新的web项目就建立成功了。</p>
+<h4 id="-1">启动项目</h4>
+<p>由于build时用到了Grunt，所以利用<code>Grunt</code>可以启动项目，若不加任何参数则默认会执行项目所有task，包括测试。若想启动项目，则执行</p>
+<pre><code>$ Grunt serve
+</code></pre>

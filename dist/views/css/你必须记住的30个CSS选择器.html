@@ -1,0 +1,580 @@
+<h4 id="">开篇</h4>
+<blockquote>
+  <p>有30个CSS选择器你必须烂熟于心，它们适应于当今各大主流浏览器。</p>
+</blockquote>
+<h4 id="1">1.<code>*</code></h4>
+<pre><code>* {
+  margin: 0;
+  padding: 0;
+}
+</code></pre>
+<p><code>*</code>选择器选择的是每一个单一元素。很多程序员用上面的CSS将所有元素的margin和padding清零。虽然这是有效的，但最好还是别这么做，这会使得浏览器的负担很重。</p>
+<p><code>*</code>选择器也可以用在孩子选择器中。</p>
+<pre><code>#container * {
+  border: 1px solid black;
+}
+</code></pre>
+<p>这会使<code>#container</code>所有孩子都有border，但还是那句话，如果不是必须得这么做，还是别用星选择器。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/star.html">view demo</a></p>
+<h4 id="compatibility">Compatibility</h4>
+<ul>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="2x">2.<code>#x</code></h4>
+<pre><code>#container {
+   width: 960px;
+   margin: auto;
+}
+</code></pre>
+<p>id选择器的优先级很高，因此在用之前问问自己：<code>我仅仅是为了找到这个元素而去给他加id的吗？</code></p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/id.html">view demo</a></p>
+<h4 id="compatibility-1">Compatibility</h4>
+<ul>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="3x">3.<code>.x</code></h4>
+<pre><code>.error {
+  color: red;
+}
+</code></pre>
+<p>class选择器和id选择器不同，首先优先级没有id高，再者id选择器只能选择一个，而class选择器则可以筛选出来一组。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/class.html">view demo</a></p>
+<h4 id="compatibility-2">Compatibility</h4>
+<ul>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="4xy">4.<code>x y</code></h4>
+<pre><code>li a {
+  text-decoration: none;
+}
+</code></pre>
+<p>当不是选择所有后代时，后代选择器将会非常有用，但有一点得注意：
+<code>如果你的选择器是x y z a b.error, 那你就用错了。你得问问自己是否需要应用每一层？</code></p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/descend.html">view demo</a></p>
+<h4 id="compatibility-3">Compatibility</h4>
+<ul>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="5x">5.<code>x</code></h4>
+<pre><code>a { color: red; }
+ul { margin-left: 0; }
+</code></pre>
+<p>如果想选择同一类元素，那就不要用id或class了，直接用元素选择器。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/tagName.html">view demo</a></p>
+<h4 id="compatibility-4">Compatibility</h4>
+<ul>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="6xvistedandxlink">6.<code>x:visted and x:link</code></h4>
+<pre><code>a:link { color: red; }
+a:visted { color: purple; }
+</code></pre>
+<p>我们常常用伪类:link筛选a标签是还未被点击；而用:visited去筛选哪些别点击过了。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/links.html">view demo</a></p>
+<h4 id="compatibility-5">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="7xy">7.<code>x + y</code></h4>
+<pre><code>ul + p {
+   color: red;
+}
+</code></pre>
+<p>相邻选择器会选择第一个相邻的元素，如上面的例子会让ul后第一个段落的字体变为红色（而ul与p之间是不能有其他元素的）。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/adjacent.html">view demo</a></p>
+<h4 id="compatibility-6">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="8xy">8.<code>x &gt; y</code></h4>
+<pre><code>div#container &gt; ul {
+  border: 1px solid black;
+}
+</code></pre>
+<p>这也是一种后代选择器，但它与<code>x y</code>这种后代选择器不同，它只能选择直系后代。如：</p>
+<pre><code>&lt;div id="container"&gt;
+   &lt;ul&gt;
+      &lt;li&gt; List Item
+        &lt;ul&gt;
+           &lt;li&gt; Child &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt; List Item &lt;/li&gt;
+      &lt;li&gt; List Item &lt;/li&gt;
+      &lt;li&gt; List Item &lt;/li&gt;
+   &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+<p>在这个例子中，<code>#cotainer &gt; ul</code>只会选择第一个ul,而不会search到ul里面那个包含li的ul。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/childcombinator.html">view demo</a></p>
+<h4 id="compatibility-7">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="9xy">9.<code>x ~ y</code></h4>
+<pre><code>ul ~ p {
+   color: red;
+}
+</code></pre>
+<p>这种兄弟选择器与<code>x + y</code>类似，但不同的是，后者只能筛选第一个p，而这种却可以满足ul下所有的直系p标签。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/generalcombinator.html">view demo</a></p>
+<h4 id="compatibility-8">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="10xtitle">10.<code>x[title]</code></h4>
+<pre><code>a[title] {
+   color: green;
+}
+</code></pre>
+<p>属性选择器。这将选择所有具有title属性的a标签。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes.html">view demo</a></p>
+<h4 id="compatibility-9">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="11xhreffoo">11.<code>x[href="foo"]</code></h4>
+<pre><code>a[href="http://net.tutsplus.com"] {
+  color: #1f6053; /* nettuts green */
+}
+</code></pre>
+<p>这个选择器可以选择链接为<code>href="http://net.tutsplus.com"</code>的a标签，可如果这个里这个链接变了呢？，这未免有些严格，可以适当的用正则表达式去匹配。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes2.html">view demo</a></p>
+<h4 id="compatibility-10">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="12xhrefnettuts">12.<code>x[href*="nettuts"]</code></h4>
+<pre><code>a[href*="tuts"] {
+  color: #1f6053; /* nettuts green */
+}
+</code></pre>
+<p>'*'号将匹配href中含有nuttuts字符，如果想更加严格，还可以用<code>^</code>和<code>$</code>表示开始和结束。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes3.html">view demo</a></p>
+<h4 id="compatibility-11">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="13xhrefhttp">13.<code>x[href^="http"]</code></h4>
+<pre><code>a[href^="http"] {
+   background: url(path/to/external/icon.png) no-repeat;
+   padding-left: 10px;
+}
+</code></pre>
+<p>这样去筛选具有有效href的a将匹配http://和https://.</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes4.html">view demo</a></p>
+<h4 id="compatibility-12">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="14xhrefdjpg">14.<code>x[href$=".jpg"]</code></h4>
+<pre><code>a[href$=".jpg"] {
+   color: red;
+}
+</code></pre>
+<p>这将会选择链接为jpg格式的图片链接，可是如果图片类型为png或gif等怎么办？</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes5.html">view demo</a></p>
+<h4 id="compatibility-13">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="15xdatafoo">15.<code>x[data-*="foo"]</code></h4>
+<pre><code>a[data-filetype="image"] {
+   color: red;
+}
+</code></pre>
+<p>按照规则<code>14.</code>我们可能得：</p>
+<pre><code>a[href$=".jpg"],
+a[href$=".jpeg"],
+a[href$=".png"],
+a[href$=".gif"] {
+   color: red;
+}
+</code></pre>
+<p>可这也太。。。
+我们可以加一个属性用以标示。</p>
+<pre><code>&lt;a href="path/to/image.jpg" data-filetype="image"&gt; Image Link &lt;/a&gt;
+</code></pre>
+<pre><code>a[data-filetype="image"] {
+   color: red;
+}
+</code></pre>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes6.html">view demo</a></p>
+<h4 id="compatibility-14">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="16xfoobar">16.<code>x[foo~="bar"]</code></h4>
+<pre><code>a[data-info~="external"] {
+   color: red;
+}
+
+a[data-info~="image"] {
+   border: 1px solid black;
+}
+</code></pre>
+<p><code>~</code>将会让我们匹配到属性值被空格分隔符分开的值，如：</p>
+<pre><code>"&lt;a href="path/to/image.jpg" data-info="external image"&gt; Click Me, Fool &lt;/a&gt;
+</code></pre>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/attributes7.html">view demo</a></p>
+<h4 id="compatibility-15">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="17xchecked">17.<code>x:checked</code></h4>
+<pre><code>input[type=radio]:checked {
+   border: 1px solid black;
+}
+</code></pre>
+<p>这个常常对checkbox非常有用。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/checked.html">view demo</a></p>
+<h4 id="compatibility-16">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="18xafter">18.<code>x:after</code></h4>
+<p>伪类<code>before</code>和<code>after</code>已经有了一些新的用法，比如最常见的：</p>
+<pre><code>.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    }
+
+.clearfix { 
+   *display: inline-block; 
+   _height: 1%;
+}
+</code></pre>
+<p>没错，这就是默认标准clearfix的实现原理。</p>
+<h4 id="compatibility-17">Compatibility</h4>
+<ul>
+<li>IE8+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="19xhover">19.<code>x:hover</code></h4>
+<pre><code>div:hover {
+  background: #e3e3e3;
+}
+</code></pre>
+<p>但是得注意，<code>:hover</code>在早期IE中并不适用。</p>
+<h4 id="compatibility-18">Compatibility</h4>
+<ul>
+<li>IE6+（In IE6, :hover must be applied to an anchor element）</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="20xnotselector">20.<code>x:not(selector)</code></h4>
+<pre><code>div:not(#container) {
+   color: blue;
+}
+</code></pre>
+<p>反选选择器。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/not.html">view demo</a></p>
+<h4 id="compatibility-19">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="21xpseudoelement">21.<code>x::pseudoElement</code></h4>
+<pre><code>p::first-line {
+   font-weight: bold;
+   font-size: 1.2em;
+}
+
+p::first-letter {
+   float: left;
+   font-size: 2em;
+   font-weight: bold;
+   font-family: cursive;
+   padding-right: 2px;
+}
+</code></pre>
+<p>伪元素选择器，注意尽量还是按标准来，多使用<code>::</code>而不是<code>:</code>。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/pseudoElements.html">view demo</a></p>
+<h4 id="compatibility-20">Compatibility</h4>
+<ul>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="22xnthchildn">22.<code>x:nth-child(n)</code></h4>
+<pre><code>li:nth-child(3) {
+   color: red;
+}
+</code></pre>
+<p>选择一组中特定的孩子。n表示第几个，也可以是表达式，如2n+1,2n.</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/nth.html">view demo</a></p>
+<h4 id="compatibility-21">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="23xnthlastchildn">23.<code>x:nth-last-child(n)</code></h4>
+<pre><code>li:nth-last-child(2) {
+   color: red;
+}
+</code></pre>
+<p>如果li有400个，而你需要target到第397个，那用这个咱合适不过了。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/nthLast.html">view demo</a></p>
+<h4 id="compatibility-22">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="24xnthoftypen">24.<code>x:nth-of-type(n)</code></h4>
+<pre><code>ul:nth-of-type(3) {
+   border: 1px solid black;
+}
+</code></pre>
+<p>如果ul没有id，而你又要找第三个ul，那个这种方式是不错。</p>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/nthOfType.html">view demo</a></p>
+<h4 id="compatibility-23">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="25xnthlastoftypen">25.<code>x:nth-last-of-type(n)</code></h4>
+<pre><code>ul:nth-last-of-type(3) {
+   border: 1px solid black;
+}
+</code></pre>
+<p>与<code>ul:nth-of-type</code>刚好相反。</p>
+<h4 id="compatibility-24">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="26xfirstchild">26.<code>x:first-child</code></h4>
+<pre><code>ul li:first-child {
+   border-top: none;
+}
+</code></pre>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/firstChild.html">view demo</a></p>
+<h4 id="compatibility-25">Compatibility</h4>
+<ul>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="27xlastchild">27.<code>x:last-child</code></h4>
+<h5 id="example">Example</h5>
+<pre><code>&lt;ul&gt;
+   &lt;li&gt; List Item &lt;/li&gt;
+   &lt;li&gt; List Item &lt;/li&gt;
+   &lt;li&gt; List Item &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<pre><code>ul {
+ width: 200px;
+ background: #292929;
+ color: white;
+ list-style: none;
+ padding-left: 0;
+}
+
+li {
+ padding: 10px;
+ border-bottom: 1px solid black;
+ border-top: 1px solid #3c3c3c;
+}
+</code></pre>
+<p><img src="/../img/selector/list.png" alt="" /></p>
+<p><a href="https://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/extraBorders.png">view demo</a></p>
+<p>但是我不想要第一个的上边框和最后一个的下边框，可以这么做：</p>
+<pre><code>li:first-child {
+    border-top: none;
+}
+
+li:last-child {
+   border-bottom: none;
+}
+</code></pre>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/firstChild.html">view demo</a></p>
+<h4 id="compatibility-26">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="28xonlychild">28.<code>X:only-child</code></h4>
+<pre><code>div p:only-child {
+   color: red;
+}
+</code></pre>
+<p>这将匹配div里只有一个p的元素。如：</p>
+<pre><code>&lt;div&gt;&lt;p&gt; My paragraph here. &lt;/p&gt;&lt;/div&gt;
+
+&lt;div&gt;
+   &lt;p&gt; Two paragraphs total. &lt;/p&gt;
+   &lt;p&gt; Two paragraphs total. &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/onlyChild.html">view demo</a></p>
+<h4 id="compatibility-27">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="29xonlyoftype">29.<code>X:only-of-type</code></h4>
+<pre><code>li:only-of-type {
+   font-weight: bold;
+}
+</code></pre>
+<p>这将匹配元素内只有一个li的元素，有时这个做法很简便。比如要寻找只有一个列表的ul，可以：</p>
+<pre><code>ul &gt; li:only-of-type {
+   font-weight: bold;
+}
+</code></pre>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/onlyOfType.html">view demo</a></p>
+<h4 id="compatibility-28">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="30xfirstoftype">30.<code>x:first-of-type</code></h4>
+<h5 id="example-1">Example</h5>
+<pre><code>&lt;div&gt;
+   &lt;p&gt; My paragraph here. &lt;/p&gt;
+   &lt;ul&gt;
+      &lt;li&gt; List Item 1 &lt;/li&gt;
+      &lt;li&gt; List Item 2 &lt;/li&gt;
+   &lt;/ul&gt;
+
+   &lt;ul&gt;
+      &lt;li&gt; List Item 3 &lt;/li&gt;
+      &lt;li&gt; List Item 4 &lt;/li&gt;
+   &lt;/ul&gt;   
+&lt;/div&gt;
+</code></pre>
+<p>如何寻找上面的 "List Item 2"呢？</p>
+<h5 id="1-1">办法1</h5>
+<pre><code>ul:first-of-type &gt; li:nth-child(2) {
+   font-weight: bold;
+}
+</code></pre>
+<h5 id="2">办法2</h5>
+<pre><code>p + ul li:last-child {
+   font-weight: bold;
+}
+</code></pre>
+<h5 id="3">办法3</h5>
+<pre><code>ul:first-of-type li:nth-last-child(1) {
+   font-weight: bold;   
+}
+</code></pre>
+<p><a href="http://cdn.tutsplus.com/net/uploads/legacy/840_cssSelectors/selectors/firstOfType.html">view demo</a></p>
+<h4 id="compatibility-29">Compatibility</h4>
+<ul>
+<li>IE9+</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ul>
+<h4 id="-1">总结</h4>
+<p>上述选择器在IE6中的使用要尤其小心，但是别因为这而影响你阅读这篇文章。你可以参考一下<a href="http://www.quirksmode.org/css/contents.html">浏览器兼容表</a>，或者你可以用<a href="http://code.google.com/p/ie7-js/"> Dean Edward's excellent IE9.js script </a>为旧版浏览器提供这些选择器的支持。</p>
+<p>另外，当你在使用一些Javascript库时，如jQuery，请尽量的使用这些原生的CSS3选择器，因为浏览器选择器引擎将会按照浏览器的原生方式去解析，<a href="http://jsperf.com/jquery-css3-not-vs-not">这将使得你的代码更加高效</a>。</p>
+<p><code>注：此文为译文</code><a href="https://kkkkkxiaofei.github.io/jekyll/update/2015/08/23/css-selector.html">我的博客请戳</a> | <a href="http://www.sitepoint.com/understanding-block-formatting-contexts-in-css/">原文请戳</a></p>

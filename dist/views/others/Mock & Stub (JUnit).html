@@ -1,0 +1,63 @@
+<p><a href="https://kkkkkxiaofei.github.io/jekyll/update/2016/02/01/mock-stub.html">Visit This Article In Github Page</a></p>
+<h4 id="abstract">Abstract</h4>
+<blockquote>
+  <p>Both mock and stub are mummy objects for unit test in spring.When you have lots of dependencies in unit test, creating fake object to reduce dependency is really recommended. Therefore, we use mock and stub. But there are some differences between mock and stub.</p>
+</blockquote>
+<h4 id="stub">Stub</h4>
+<p>Stub is a common way to use without extra dependency in unit test.It trys to describe the behevior of the method, So we just concern about the return value when use stub.</p>
+<p>Here is example:</p>
+<pre><code>class CashRegister {
+    public void process(Purchase purchase, Printer printer) {
+        printer.print(purchase.asString());
+    }
+}
+</code></pre>
+<p>Now we have a method in the instance of the CashRegister, It have purchase and printer so that It can print the bill when invoke process.</p>
+<p>But it is not realistic for us to use a real printer in our test, so we try to use a fake printer to do unit test.</p>
+<p>In stub approach:</p>
+<p>We create a sub printer</p>
+<pre><code>public class FakePrinter extends Printer {
+    public boolean wasInvoked;
+    @Override
+    public void print(String printThis) {
+        wasInvoked = true;
+    }
+}
+</code></pre>
+<p>We test "if printer is invoked when process"</p>
+<pre><code>@Test
+public void shouldPrintInfoOfPurchase() throws Exception {
+    FakePrinter fakePrinter = new FakePrinter();
+    Item[] items = {
+        new Item("xiaofei", 200.00)
+    };
+    CashRegister cashRegister = new CashRegister();
+    Purchase purchase = new Purchase(items);
+    cashRegister.process(purchase, fakePrinter);
+    assertTrue(fakePrinter.wasInvoked);
+}
+</code></pre>
+<h4 id="mock">Mock</h4>
+<p>Mock is similar with stub, but mock is a real fake object.</p>
+<p>We can test the above method as:</p>
+<pre><code>@Test
+public void shouldPrintInfoOfPurchaseWithMockPrinter() throws Exception {
+    Printer fakePrinter = Mockito.mock(Printer.class);
+    Item[] items = {
+        new Item("xiaofei", 200.00)
+    };
+    CashRegister cashRegister = new CashRegister();
+    Purchase purchase = new Purchase(items);
+    cashRegister.process(purchase, fakePrinter);
+    verify(fakePrinter).print(purchase.asString());
+}
+</code></pre>
+<p>By using the framework of Mockito, we can create a fake object by Class, and the verify assertion can check if the method has been invoked.</p>
+<h4 id="summary">Summary</h4>
+<p>According to <a href="http://martinfowler.com/articles/mocksArentStubs.html">Martin Fowler's</a> article:</p>
+<ul>
+<li><p><code>Dummy</code> objects are passed around but never actually used. Usually they are just used to fill parameter lists.</p></li>
+<li><p><code>Fake</code> objects actually have working implementations, but usually take some shortcut which makes them not suitable for production (an in memory database is a good example).</p></li>
+<li><p><code>Stubs</code> provide canned answers to calls made during the test, usually not responding at all to anything outside what's programmed in for the test. Stubs may also record information about calls, such as an email gateway stub that remembers the messages it 'sent', or maybe only how many messages it 'sent'.</p></li>
+<li><p><code>Mocks</code> are what we are talking about here: objects pre-programmed with expectations which form a specification of the calls they are expected to receive.</p></li>
+</ul>

@@ -1,0 +1,166 @@
+<blockquote>
+  <p>以方法作为参数传递时，Ruby有proc，C#有Delegate，而JavaScript则更不用说，唯独Java在这方面很尴尬。但Java8提供了Lambda表达式和函数接口，这无疑是Javer的福音，也使得Java这门语言更佳的优秀和易用。</p>
+</blockquote>
+<h3 id="">需求</h3>
+<p>C团队是一个敏捷开发团队，它们的产品每天都会进行几十次的小版本发布，如此频繁的持续集成必须有良好的代码作为保证。为此，PM在CI中的构建任务中设定了“门槛”，所有部署必须进行Sonar代码扫描，满足一定的阀值才可以进行正常发布，以此保证产品质量。具体指标如下：</p>
+<ul>
+<li>1.工程的测试覆盖率必须大于90%</li>
+</ul>
+<h3 id="-1">分析</h3>
+<p>获取所有工程，筛选出测试覆盖率大于90%的工程，进行发布，so easy~</p>
+<h3 id="-2">实现</h3>
+<pre><code>private static List&lt;Project&gt; getValidProjects(List&lt;Project&gt; projectList) {
+    List&lt;Project&gt; validProjects = new ArrayList&lt;&gt;();
+    for(Project project : projectList) {
+        if(project.getTestCoverage() &gt; 0.9) {
+            validProjects.add(project);
+        }
+    }
+    return validProjects;
+}
+</code></pre>
+<p>代码很简单，这是java8之前的实现。当然了，我们很还可以将<code>project.getTestCoverage() &gt; 0.9</code>抽象成<code>project.isValid()</code>，这下看起来似乎没太大问题了。</p>
+<p>需求2来了，PM的规定的新指标如下：</p>
+<ul>
+<li>1.工程的测试覆盖率必须大于90%</li>
+<li>2.code smell数不能超过3个</li>
+</ul>
+<p>同样很easy，你很快速的在<code>Project.java</code>里抽象出了：</p>
+<pre><code>public boolean isValid() {
+    return this.getTestCoverage() &gt; 0.9 &amp;&amp; this.getCodeSmellNum() &lt; 3;
+}
+</code></pre>
+<p>可部署时还时老出现问题，PM再次提高质量门槛，指标如下：</p>
+<ul>
+<li>1.工程的测试覆盖率必须大于90%</li>
+<li>2.code smell数不能超过3个</li>
+<li>3.扫描问题数不超过3个</li>
+<li>4.API测试用例数大于10</li>
+<li>5.UI测试用例数大于10</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ul>
+<p>此时你的是不想把PM弄死，可你别无选择，还是得在此基础上添加了N多判断。</p>
+<p>Java8来啦。。。。</p>
+<h3 id="predicate">Predicate</h3>
+<p>仔细分析现在的需求，其实想要实现的方法是“某种行为”的结果来导向校验的集合，也就说上面的方法参数应该类似：</p>
+<pre><code>    private static List&lt;Project&gt; getValidProjects(List&lt;Project&gt; projectList, Validation validation) {
+        List&lt;Project&gt; validProjects = new ArrayList&lt;&gt;();
+        for(Project project : projectList) {
+            if(validation.test()) {
+                validProjects.add(project);
+            }
+        }
+        return validProjects;
+    }
+</code></pre>
+<p>将所有的情况都统一抽象成Validation接口，接口中的<code>test</code>方法表示校验结果。如果这样做，就变成了多态，当然可以实现，不过就得设计的比较复杂：好好的一个筛选，硬要写个接口而后再写N多类去实现，岂不是很槽糕。Java8在此基础上帮我们实现了函数接口，可以将<code>validation</code>看作是一个还未被执行的方法，对应的，我们可以这么写：</p>
+<pre><code>  private static List&lt;Project&gt; getValidProjects(List&lt;Project&gt; projectList, Predicate&lt;Project&gt; p) {
+        List&lt;Project&gt; validProjects = new ArrayList&lt;&gt;();
+        for(Project project : projectList) {
+            if(p.test(project)) {
+                validProjects.add(project);
+            }
+        }
+        return validProjects;
+    }
+</code></pre>
+<pre><code>  List&lt;Project&gt; validProjects = getValidProjects(projectList, project-&gt; project.getTestCoverage() &gt; 0.9);
+</code></pre>
+<p>将<code>project-&gt; project.getTestCoverage() &gt; 0.9</code>作为方法参数传递看起来很酷吧，对应的，我们可以聚合上面的多种<code>predicate</code>:</p>
+<pre><code>    Predicate&lt;Project&gt; testCoveragePredicate = project-&gt; project.getTestCoverage() &gt; 0.9;
+    Predicate&lt;Project&gt; codeSmellPredicate = project-&gt; project.getCodeSmellNum() &lt; 3;
+    Predicate&lt;Project&gt; issuePredicate = project-&gt; project.getIssueCount() &lt; 3;
+    Predicate&lt;Project&gt; apiPredicate = project-&gt; project.getApiCount() &gt; 10;
+    Predicate&lt;Project&gt; uiPredicate = project-&gt; project.getApiCount() &gt; 10;
+
+    Predicate&lt;Project&gt; projectPredicate = testCoveragePredicate
+            .and(codeSmellPredicate)
+            .and(codeSmellPredicate)
+            .and(issuePredicate)
+            .and(apiPredicate)
+            .and(uiPredicate);
+
+    List&lt;Project&gt; validProjects = getValidProjects(projectList, projectPredicate);
+</code></pre>
+<p>这样的代码，既然漂亮，又表意，而且可维护性还更高，很酷吧。不过不难看出，<code>Predicate</code>是<code>T-&gt;boolean</code>的形式，如果需要其他类型怎么办呢？这里简单介绍其他两个函数接口:</p>
+<h3 id="consumerandfunction">Consumer and Function</h3>
+<p><code>Consumer</code>, <code>Function</code>与<code>Predicate</code> 类似只不过前者是<code>T-&gt;void</code>的形式，而后者是<code>T-&gt;R</code>的形式，并且实现的方法略有不同。</p>
+<p>Demo for Consumer: </p>
+<pre><code>  private static void displyAllCodeSmell(List&lt;Project&gt; projectList, Consumer&lt;Project&gt; c) {
+       for(Project project : projectList) {
+           c.accept(project);
+       }
+  }
+</code></pre>
+<pre><code>  displyAllCodeSmell(projectList, project -&gt; System.out.println(project.getCodeSmellNum()));
+</code></pre>
+<p>Demo for Function:</p>
+<pre><code>  private static int calcAllIssueCount(List&lt;Project&gt; projectList, Function&lt;Project, Integer&gt; f) {
+        int sum = 0;
+        for(Project project : projectList) {
+            sum += f.apply(project);
+        }
+        return sum;
+  }
+</code></pre>
+<pre><code>  calcAllIssueCount(projectList, project -&gt; project.getIssueCount());
+</code></pre>
+<h3 id="-3">其他函数接口</h3>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Predicate<T></td>
+<td></td>
+<td>T-&gt;boolean</td>
+</tr>
+<tr>
+<td>Consumer<T></td>
+<td></td>
+<td>T-&gt;void</td>
+</tr>
+<tr>
+<td>Function<T></td>
+<td></td>
+<td>T-&gt;R</td>
+</tr>
+<tr>
+<td>Supplier<T></td>
+<td></td>
+<td>()-&gt;T</td>
+</tr>
+<tr>
+<td>UnaryOperator<T></td>
+<td></td>
+<td>T-&gt;T</td>
+</tr>
+<tr>
+<td>BinaryOperator<T></td>
+<td></td>
+<td>(T,T)-&gt;T</td>
+</tr>
+<tr>
+<td>BiPredicate<L,R></td>
+<td></td>
+<td>(L,R)-&gt;boolean</td>
+</tr>
+<tr>
+<td>BiConsumer<T,U></td>
+<td></td>
+<td>(T,U)-&gt;void</td>
+</tr>
+<tr>
+<td>BiFunction(T,U,R)</td>
+<td></td>
+<td>(T,U)-&gt;R</td>
+</tr>
+</tbody>
+</table>
