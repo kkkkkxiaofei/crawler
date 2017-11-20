@@ -5,8 +5,8 @@
   "scripts": {
     "build:dev": "cross-env NODE_ENV=development webpack --progress --profile --colors",
     "build:prod": "cross-env NODE_ENV=production webpack --progress --profile --colors",
-    "server:dev": "yarn build:dev &&  cross-env NODE_ENV=development node ./server/main.js",
-    "server:prod": "yarn build:prod && cross-env NODE_ENV=production node ./server/main.js",
+    "server:dev": "yarn build:dev &&  cross-env NODE_ENV=development node ./server/index.js",
+    "server:prod": "yarn build:prod && cross-env NODE_ENV=production node ./server/index.js",
     "start": "yarn install --production=false && yarn server:prod",
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --require ./testHelper.js ./tests/**/*.spec.js",
     "lint": "eslint ./src",

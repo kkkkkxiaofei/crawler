@@ -8,7 +8,7 @@ const __PROD__ = project.__PROD__;
 module.exports = {
 	entry: [
 		'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-		path.resolve(project.basePath, 'src', 'index.js')
+        path.resolve(project.basePath, 'src', 'index.js')
 	],
 	output: {
 		filename: '[name].bundle.js',
