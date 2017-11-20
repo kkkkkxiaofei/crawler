@@ -5,25 +5,11 @@ html {
   font-size: 14px;
   background-color: #000000;
   overflow-y: scroll;
-  height: 100%;
 }
 
 body {
   margin: 0;
   color: #fafafa;
   font-family: Menlo, Monaco, "Courier New", monospace;
-  height: 100%;
-}
-
-#root {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  .message-box {
-    width: 100%;
-    text-align: center;
-    line-height: 2;
-    font-size: 32px;
-  }
 }
 
