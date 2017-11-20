@@ -36,7 +36,7 @@ class App extends React.Component {
         const {children, location: {pathname}} = this.props;
         return (
             <div className="message-box">
-                大哥，你吃好喝好，今天高新万达开业呢，我晚上去浪去呀，网站没时间做，但是域名已经好了，哈哈哈哈哈哈哈!
+                大哥，提前祝嫂子生日快乐，哈哈哈哈哈哈哈!
             </div>
         );
     }
