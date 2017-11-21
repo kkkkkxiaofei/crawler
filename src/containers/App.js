@@ -1,8 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchListings } from '../actions/iproperty/listingAction';
 
-export default class App extends React.Component {
+class App extends React.Component {
+
+    componentDidMount() {
+        const { fetchListings } = this.props;
+        fetchListings(window.location.search.replace('?uri=', ''));
+    }
+
     render() {
-        const {children} = this.props;
+        const { children } = this.props;
         return (
             <div className="app">
                 <div className="nav">
@@ -15,4 +23,6 @@ export default class App extends React.Component {
         );
     }
 }
+const mapDispatchToProps = () => ({ fetchListings });
 
+export default connect(null, mapDispatchToProps)(App);

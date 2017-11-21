@@ -32,12 +32,11 @@ const startCrawling = (request, response) => {
     destination && crawler.queue(destination);
 };
 
-const getRouter = () => {
+export default () => {
     const router = express.Router();
-    router.get('/start', (req, res) => {
+    router.get('/api/iproperty/listing', (req, res) => {
         startCrawling(req, res);
     });
     return router;
 };
 
-export default getRouter;

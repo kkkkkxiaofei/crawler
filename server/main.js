@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import project from '../project.config';
-import getRouter from './routerHelper';
+import getListingRouter from './routers/iproperty/listingRouter';
 
 export default {
     start: () => {
@@ -27,7 +27,7 @@ export default {
         }
 
         app.use(express.static(path.resolve(project.basePath, project.outDir)));
-        app.use('/', getRouter());
+        app.use('/', getListingRouter());
         app.use('*', (req, res) => {
             const file = path.resolve(project.basePath, project.outDir, 'index.html');
             res.sendFile(file);
