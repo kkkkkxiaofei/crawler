@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "crawler": "^1.1.1",
     "es6-promise": "^4.1.1",
     "express": "^4.15.3",
     "isomorphic-fetch": "^2.2.1",
