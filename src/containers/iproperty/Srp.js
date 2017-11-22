@@ -14,7 +14,7 @@ class Srp extends React.Component {
     render() {
         const { items = [], inProgress } = this.props;
         return (
-            <div className="page">
+            <div className="page iproperty-srp">
                 {items.map(({ imgSrc, location }, index) =>
                     <div key={index} className="listing">
                         <div className="img-wrapper">
