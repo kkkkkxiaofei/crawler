@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/rootReducer';
 import logger from '../middlewares/logger';
+import wrapperAsynAction from '../middlewares/wrapperAsynAction';
 
 export default function configureStore(initialState) {
     const enhancers = [];
@@ -17,7 +18,7 @@ export default function configureStore(initialState) {
         rootReducer,
         initialState,
         composeEnhancers(
-            applyMiddleware(thunk, logger),
+            applyMiddleware(thunk, logger, wrapperAsynAction),
             ...enhancers
         )
     );

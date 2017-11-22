@@ -5,7 +5,7 @@ import _ from 'lodash';
 const parseData = ({$, body}) => {
     var data = _.map($(body).find(('ul.listing-list > li')), function(elem) {
         var $listing = $(elem);
-        var imgSrc = $listing.find('.slick-active img').attr('src');
+        var imgSrc = $listing.find('.slick-active img').attr('data-src');
         var location = $listing.find('.row-one-left-col-listing-location').text();
         return {
             imgSrc,
