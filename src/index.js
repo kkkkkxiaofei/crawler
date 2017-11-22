@@ -4,6 +4,7 @@ import Root from './Root';
 import configureStore from './store/configureStore';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import 'antd/dist/antd.css';
 import './styles/index.scss';
 
 const store = configureStore();

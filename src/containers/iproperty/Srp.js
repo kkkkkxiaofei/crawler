@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchListings } from '../../actions/iproperty/listingAction';
+import Loading from '../../common/components/Loading';
 
 class Srp extends React.Component {
 
@@ -11,21 +12,24 @@ class Srp extends React.Component {
     }
 
     render() {
-        const { children } = this.props;
+        const { items = [], inProgress } = this.props;
         return (
-            <div className="app">
-                <div className="nav">
-                    <p className="title">Front End Studio</p>
-                </div>
-                <div className="main">
-                    {children}
-                </div>
+            <div className="page">
+                {items.map(({ imgSrc, location }, index) =>
+                    <div key={index} className="listing">
+                        <div className="img-wrapper">
+                            <img src={imgSrc} />
+                        </div>
+                        <div className="location">{location}</div>
+                    </div>
+                )}
+                <Loading inProgress={inProgress} />
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ iproperty }) => iproperty.srp;
+const mapStateToProps = ({ iproperty }) => ({ ...iproperty.srp });
 const mapDispatchToProps = dispatch => bindActionCreators({ fetchListings }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Srp);

@@ -42,6 +42,7 @@
     "webpack-hot-middleware": "^2.18.2"
   },
   "dependencies": {
+    "antd": "^2.13.10",
     "classnames": "^2.2.5",
     "crawler": "^1.1.1",
     "es6-promise": "^4.1.1",

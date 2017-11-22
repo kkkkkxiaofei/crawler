@@ -7,7 +7,7 @@ class App extends React.Component {
         return (
             <div className="app">
                 <div className="nav">
-                    <p className="title">Let's 爬</p>
+                    <p className="title">let pa</p>
                 </div>
                 <div className="main">
                     {children}
