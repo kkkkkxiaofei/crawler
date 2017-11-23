@@ -34,7 +34,7 @@ const startCrawling = (request, response) => {
 
 export default () => {
     const router = express.Router();
-    router.get('/api/iproperty/listing', (req, res) => {
+    router.get('/api/iproperty/srp', (req, res) => {
         startCrawling(req, res);
     });
     return router;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchListings } from '../../actions/iproperty/listingAction';
+import { fetchListings } from '../../actions/iproperty/srpAction';
 import Loading from '../../common/components/Loading';
 
 class Srp extends React.Component {
